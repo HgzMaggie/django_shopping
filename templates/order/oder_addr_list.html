@@ -1,0 +1,62 @@
+{% extends "bese_order.html" %}
+{% load static %}
+
+{% block ext_css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'axf/order/css/order_order_list.css' %}">
+{% endblock %}
+{% block ext_js %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'axf/order/js/order_addr_list.js' %}"></script>
+{% endblock %}
+{% block header %}
+    <div class="title">
+        <a href="#" onclick="javascript:history.back(-1);">
+            <div class="arrow-box nav-left">
+                返回
+            </div>
+        </a>
+        <a id="edi_new" href="{% url 'axf:order_addrPCA' %}">
+            <div class="arrow-box nav-left">
+                添加
+            </div>
+        </a>
+        <p class="font">地址列表</p>
+    </div>
+
+{% endblock %}
+{% block content %}
+    <div id="order_addr_list" class="container">
+        <ol>
+            {% for user_addr in user_addrs %}
+                <ul class="user_addr">
+                    <div class="is_select" addrid="{{ user_addr.id }}">
+                        {% if user_addr.is_default %}
+                            <span>√</span>
+                        {% else %}
+                            <span></span>
+                        {% endif %}
+                    </div>
+                    <li class="menuList">
+                        <p>
+                            <span id="name">{{ user_addr.A_user_name }}</span>
+                            <span id="tell">{{ user_addr.A_tell }}</span>
+                        </p>
+                        <br>
+                        <div id="detail">收货地址：{{ user_addr.A_detail }}</div>
+                        <div id="toto">
+                            <a addrid="{{ user_addr.id }}" class="edi">编辑</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
+                                addrid="{{ user_addr.id }}" class="del">删除</a>
+                        </div>
+                    </li>
+                </ul>
+            {% endfor %}
+        </ol>
+        <a id="back_button" href="{% url 'axf:cart' %}" class="btn btn-success btn-block">确定</a>
+        <br>
+        <br>
+        <br>
+        <br>
+
+    </div>
+{% endblock %}

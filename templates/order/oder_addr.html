@@ -1,0 +1,133 @@
+{% extends "bese_order.html" %}
+{% load static %}
+
+{% block ext_css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'axf/order/css/order_addr.css' %}">
+{% endblock %}
+
+{% block ext_js %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'axf/order/js/order_addr.js' %}"></script>
+{% endblock %}
+
+{% block footer %}
+    <div class="title">
+        <a href="#" onclick="javascript:history.back(-1);">
+            <div class="arrow-box nav-left">
+                返回
+            </div>
+        </a>
+        <p class="font">编辑收货地址</p>
+    </div>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <form method="POST" action="{% url 'axf:order_addrPCA' %}" class="bs-example bs-example-form" role="form"
+              onsubmit="return all_right();">
+            {% csrf_token %}
+            {% if addr %}
+                <input name="addr_id" type="hidden" value="{{ addr.id }}" >
+                <div class="input-group">
+                    <span class="input-group-addon">收货人:</span>
+
+                    <input id="order_name" name="order_name" type="text" class="form-control"
+                           value="{{ addr.A_user_name }}">
+                </div>
+                <span class="name_a"></span>
+
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon">电&nbsp;&nbsp;&nbsp;&nbsp;话:</span>
+                    <input id="tell" name="order_tell" type="text" class="form-control" value="{{ addr.A_tell }}">
+                </div>
+                <span class="tell_a"></span>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon">收货时间:</span>
+                    <input id="time" name="order_time" type="text" class="form-control" placeholder="1"
+                           value="{{ addr.A_time }}">
+                    <span class="input-group-addon">小时后收货</span>
+                </div>
+                <span class="time_a"></span>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon">收货地址:</span>
+                    <select id="p">
+                        <option value="1">请选择</option>
+                    </select>
+                    <select id="c">
+                        <option value="1">请选择</option>
+                    </select>
+                    <select id="a">
+                        <option value="1">请选择</option>
+                    </select>
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon">详细地址:</span>
+                    <input id="addr_dail" name="order_detail" type="text" class="form-control" placeholder=""
+                           value="{{ addr.A_detail }}">
+                </div>
+                <span class="addr_dail_a"></span>
+                <br>
+                <br>
+                <div>
+                    <span id="checkbox">默认地址<input name="is_default" type="checkbox""></span>
+                </div>
+            {% else %}
+                <div class="input-group">
+                    <span class="input-group-addon">收货人:</span>
+
+                    <input id="order_name" name="order_name" type="text" class="form-control"
+                           value="">
+                </div>
+                <span class="name_a"></span>
+
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon">电&nbsp;&nbsp;&nbsp;&nbsp;话:</span>
+                    <input id="tell" name="order_tell" type="text" class="form-control" value="">
+                </div>
+                <span class="tell_a"></span>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon">收货时间:</span>
+                    <input id="time" name="order_time" type="text" class="form-control" placeholder="1"
+                           value="1">
+                    <span class="input-group-addon">小时后收货</span>
+                </div>
+                <span class="time_a"></span>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon">收货地址:</span>
+                    <select id="p">
+                        <option value="1">请选择</option>
+                    </select>
+                    <select id="c">
+                        <option value="1">请选择</option>
+                    </select>
+                    <select id="a">
+                        <option value="1">请选择</option>
+                    </select>
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon">详细地址:</span>
+                    <input id="addr_dail" name="order_detail" type="text" class="form-control" placeholder=""
+                           value="">
+                </div>
+                <span class="addr_dail_a"></span>
+                <br>
+                <br>
+                <div>
+                    <span id="checkbox">默认地址<input id="is_default" name="is_default" type="checkbox"></span>
+                </div>
+            {% endif %}
+
+            <br>
+            <br>
+            <button type="submit" class="btn btn-success btn-block">保存</button>
+        </form>
+    </div>
+{% endblock %}

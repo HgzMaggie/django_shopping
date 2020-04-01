@@ -1,0 +1,50 @@
+{% extends "bese_order.html" %}
+{% load static %}
+
+{% block ext_css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'axf/order/css/order_detail.css' %}">
+{% endblock %}
+{% block ext_js %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'axf/order/js/order_detail.js' %}"></script>
+{% endblock %}
+{% block header %}
+    <div class="title">
+        <a href="#" onclick="javascript:history.back(-1);">
+            <div class="arrow-box nav-left">
+                返回
+            </div>
+        </a>
+        <p class="font">下单</p>
+    </div>
+{% endblock %}
+{% block content %}
+
+    <div id="order_detail" class="container">
+        <h6>订单编号： {{ order.id }} </h6>
+        <ul>
+            {# 查所有订单内商品的内容 ： 被关联的对象.字段名_set.all #}
+            {% for ordergoods in order.ordergoods_set.all %}
+                <li class="menuList">
+                    <a href="#">
+                        <img src="{{ ordergoods.O_goods.productimg }}" alt="{{ ordergoods.O_goods.productlongname }}">
+                        <p class="longname">{{ ordergoods.O_goods.productlongname }}</p>
+                        <p class="presentPrice">{{ ordergoods.O_goods.price }}</p>
+                    </a>
+                    <section>
+                        <span class="num">{{ ordergoods.O_goods_num }}</span>
+                    </section>
+                </li>
+            {% endfor %}
+
+        </ul>
+        <h1 id="total">总价：<span id="total_price">{{ order.O_price }}</span></h1>
+        <form method="POST" enctype="multipart/form-data" action="{% url 'axf:alipay' %}">
+            {% csrf_token %}
+            <input name="orderid" type="hidden" value="{{ order.id }}">
+            <button type="submit" orderid="{{ order.id }}" id="alipay" class="btn btn-success btn-block">支付</button>
+        </form>
+    </div>
+
+{% endblock %}
