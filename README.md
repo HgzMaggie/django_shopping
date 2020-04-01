@@ -1,4 +1,4 @@
-# django_blog
+# django_shopping
 <h1>一个Python(django)实现的商城project!!<h1>
 <h2>haha<h2>
  <h4>主要功能：<h4>
